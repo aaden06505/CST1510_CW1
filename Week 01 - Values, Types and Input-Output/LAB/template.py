@@ -2,8 +2,8 @@
 RECORD CHECK  -  my version
 ===========================
 
-Name  :
-Lane  :  AI / Cyber / IT      (delete two)
+Name  : Asli 
+Lane  :  Cyber 
 Date  :
 
 Run it:   python template.py
@@ -21,9 +21,9 @@ Delete these instructions as you replace them with your code.
 #
 #    Remember: input() always gives back text.
 
-label = input("Hostname: ")
-first = float(input("GB used: "))
-second = float(input("GB total: "))
+source_ip = input("Source IP: ")
+failed_logins = float(input("Failed logins: "))
+total_attempts = float (input("Total attempts: "))
 
 
 # ================================================================== PROCESS
@@ -34,8 +34,10 @@ second = float(input("GB total: "))
 #
 #    Do not type the answers. Calculate them.
 
-difference = second - first  
-percent = first / second * 100 
+successful_logins = total_attempts - failed_logins
+percent_failed = failed_logins / total_attempts * 100
+# Success rate : a low rate alongside many failures points to brute-forcing
+percent_success = successful_logins / total_attempts * 100
 
 
 # =================================================================== OUTPUT
@@ -50,15 +52,14 @@ percent = first / second * 100
 
 print()
 print("=" * 34)
-print(f"  RECORD CHECK  -  {label}")
+print(f"  RECORD CHECK  -  {source_ip}")
 print("=" * 34)
 
-print(f"  used  : {first:>10.2f}")
-print(f"  total : {second:>10.2f}")
-print(f"  difference  : {difference:>+10.2f}")
-print(f"  percent : {percent:>10.2f}")
-print(f" status       :{label} check completed")
-
+print(f"  Failed     : {failed_logins:>10.2f}")
+print(f"  Total      : {total_attempts:>10.2f}")
+print(f"  Successful : {successful_logins:>+10.2f}")
+print(f"  Failed %   : {percent_failed:>10.2f} %")
+print(f"  Success %  : {percent_success:>10.2f} %")
 print("=" * 34)
 
 
