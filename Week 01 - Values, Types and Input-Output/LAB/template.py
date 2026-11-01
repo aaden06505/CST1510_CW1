@@ -23,7 +23,7 @@ Delete these instructions as you replace them with your code.
 
 source_ip = input("Source IP: ")
 failed_logins = float(input("Failed logins: "))
-total_attempts = float (input("Total attempts: "))
+total_attempts = float(input("Total attempts: "))
 
 
 # ================================================================== PROCESS
@@ -69,4 +69,4 @@ print("=" * 34)
 #    [ x ] Run it three times with different numbers
 #    [ x ] Run it with a total of 0 and write the error in your journal
 #    [ x ] Check every variable name says what it holds
-#    [ x ] Show it to the person next to you
+#    [ x ] Show it to the person next to you and explain what it does

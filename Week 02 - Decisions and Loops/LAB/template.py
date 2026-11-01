@@ -2,9 +2,9 @@
 RECORD CHECK  -  my version
 ===========================
 
-Name  :
-Lane  :  AI / Cyber / IT      (delete two)
-Date  :
+Name  :  Asli
+Lane  :  Cyber 
+Date  :  15/10/2026
 
 Run it:   python template.py
 
@@ -20,30 +20,28 @@ Delete these instructions as you replace them with your code.
 #    - the third  is a NUMBER (use float(), not int())
 over_limit_count = 0
 while True:
-    label = input("Enter hostname: ")   
+    label = input("Enter source IP: ")  
     if label.lower() == "quit":
-     break
-    
-    value =  float(input("Enter GB used: "))
-    limit =  float(input("Enter GB limit: "))
-    if limit<=0:
-        print("Limit must be greater than 0. Please try again.")
+        break
+    failed_logins = float(input("Enter failed login attempts: "))
+    total_attempts = float(input("Enter total login attempts: "))
+    if total_attempts <= 0:
+        print("Total attempts must be greater than 0. Please try again.")
         continue
-
     # ================================================================== PROCESS
     # 2. Work out the difference and the percentage.       [Typical and above]
-    difference = value - limit
-    percent = (value / limit) * 100
-
+    successful_logins = total_attempts - failed_logins
+    percent_failed = (failed_logins / total_attempts) * 100
+    percent_success = (successful_logins / total_attempts) * 100
     # 3. Decide a status and store it in a variable called status.
     #
     #    Threshold : if / else        -> "OVER LIMIT" or "OK"
     #    Typical   : if / elif / else -> "OVER LIMIT" (100% or more),
     #                                     "WARNING" (90% or more), otherwise "OK"
 
-    if percent >= 100:
+    if percent_failed >= 100:
         status = "OVER LIMIT"
-    elif percent >= 90:
+    elif percent_failed >= 90:
         status = "WARNING"
     else:
         status = "OK"
@@ -64,11 +62,13 @@ while True:
     print(f"  RECORD CHECK  -  {label}")
     print("=" * 34)
 
-    print(f"used    : {value:.2f} ")
-    print(f"limit   : {limit:.2f} ")
-    print(f"diff    : {difference:.2f} ")
-    print(f"percent : {percent:.2f} %")
-    print(f"status  : {status}")
+   
+    print(f"Failed logins     : {failed_logins:>10.2f}")
+    print(f"Total attempts    : {total_attempts:>10.2f}")
+    print(f"Successful logins : {successful_logins:>10.2f}")
+    print(f"Failed %          : {percent_failed:>10.2f}%")
+    print(f"Success %         : {percent_success:>10.2f}%")
+    print(f"Status            : {status}")
             
 
     print("=" * 34)

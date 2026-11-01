@@ -1,0 +1,7 @@
+source_ip,failed_logins,total_attempts,percent,status
+10.0.0.5,120,100,120.0,OVER LIMIT
+10.0.0.8,95,100,95.0,WARNING
+192.168.1.10,45,100,45.0,OK
+172.16.0.2,87,100,87.0,OK
+192.168.1.20,101,100,101.0,OVER LIMIT
+10.0.0.15,60,100,60.0,OK

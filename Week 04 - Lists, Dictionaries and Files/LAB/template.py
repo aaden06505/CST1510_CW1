@@ -2,9 +2,9 @@
 RECORD CHECK  -  my version
 ===========================
 
-Name  :
-Lane  :  AI / Cyber / IT      (delete two)
-Date  :
+Name  : Asli
+Lane  : Cyber
+Date  : 21/10/2026
 
 Run it:   python template.py
 
@@ -19,7 +19,31 @@ Delete these instructions as you replace them with your code.
 #    nothing outside it should contain a print() of its own. Give each a
 #    one-line docstring.
 
-# your function(s) go here
+def check_record(value, limit):
+    """Return the difference, percentage and status for a record."""
+    difference = value - limit
+    percent = (value / limit) * 100
+
+    if percent >= 100:
+        status = "OVER LIMIT"
+    elif percent >= 90:
+        status = "WARNING"
+    else:
+        status = "OK"
+
+    return difference, percent, status
+def print_report(label, value, limit, difference, percent, status):
+    """Print the security record report."""
+    print()
+    print("=" * 34)
+    print(f"  RECORD CHECK - {label}")
+    print("=" * 34)
+    print(f"Failed logins : {value:>10.2f}")
+    print(f"Total attempts: {limit:>10.2f}")
+    print(f"Difference    : {difference:>10.2f}")
+    print(f"Percentage    : {percent:>9.2f}%")
+    print(f"Status        : {status:>10}")
+    print("=" * 34)
 
 
 # ====================================================================== STORE
@@ -33,8 +57,28 @@ Delete these instructions as you replace them with your code.
 #    Excellent : also write the results out to a new file (one line per
 #                record: label, status), as well as printing them.
 
-records = []   # replace with your code
+def load_records(path):
+    """Load cyber security records from a file."""
+    records = []
 
+    with open(path) as f:
+        for line in f:
+            label, value, limit = line.strip().split(",")
+
+            records.append({
+                "label": label,
+                "value": float(value),
+                "limit": float(limit)
+            })
+
+    return records
+
+
+try:
+    records = load_records("cyber_records.txt")
+except FileNotFoundError:
+    print("cyber_records.txt not found")
+    records = []
 
 # =============================================================== PROCESS + OUTPUT
 # 3. Loop over records. For each one, call check_record and print_report.
@@ -42,13 +86,37 @@ records = []   # replace with your code
 #    Excellent : also keep a running count of how many were OVER LIMIT, and
 #                print that once, after the loop ends.
 
-# your loop goes here
+over_limit_count = 0
+
+with open("results.txt", "w") as f:
+    for record in records:
+        difference, percent, status = check_record(
+            record["value"],
+            record["limit"]
+        )
+
+        print_report(
+            record["label"],
+            record["value"],
+            record["limit"],
+            difference,
+            percent,
+            status
+        )
+
+        f.write(f'{record["label"]},{status}\n')
+
+        if status == "OVER LIMIT":
+            over_limit_count += 1
+
+
+print(f"Total OVER LIMIT records: {over_limit_count}")
 
 
 # ==========================================================================
 # 4. Before you finish:
 #
-#    [ ] Run it and check every record's numbers are correct by hand
-#    [ ] If you are loading from a file, check what happens when the file
+#    [x] Run it and check every record's numbers are correct by hand
+#    [x] If you are loading from a file, check what happens when the file
 #        does not exist - write the error down
-#    [ ] Check every function still does one job
+#    [x] Check every function still does one job
